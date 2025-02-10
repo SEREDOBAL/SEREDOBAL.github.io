@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+        </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Seredobal SL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-b6fEULnP8Mj5Ro9X66d8Zz3P7nq7DTHanZiAfT5cnS9We4jYOVF8b+g1On3ONRLc0FZX74m9dTLHzZw48RhiWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            overflow-x: hidden; /* Evita que el contenido pueda sobresalir horizontalmente */
+        }
+
+        section {
+            overflow-x: hidden; /* Asegura que las secciones no contribuyan al desbordamiento */
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:  "Quicksand", serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Evitar el desbordamiento horizontal */
+        }
+
+        section {
+            padding: 50px 20px;
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            min-height: 80vh; /* Asegura que cada sección ocupe al menos la altura de la ventana */
+            overflow: hidden; /* Evitar que se vea el fondo durante la animación */
+            scroll-margin-top: 20px; /* Ajusta este valor según la altura de tu encabezado */
+        }
+        section h2 a {
+            color: inherit; /* Mantener el color del título */
+            text-decoration: none; /* Quitar subrayado */
+        }
+
+        section h2 a:hover {
+            color: #ffffff; /* Cambiar color al pasar el mouse */
+        }
+
+
+        .contacto {
+            min-height: 20vh;
+        }
+
+        /* Portada */
+        .portada {
+            background: url('Img/portadas.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            padding-top: 100px; /* Añadido para crear espacio debajo del header */
+            position: relative;
+        }
+        .portada-logo {
+            width: 700px; /* Ajusta el tamaño de la imagen */
+            filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5)); /* Sombra ajustada a la forma de la imagen */
+        }
+
+        .portada h1 {
+            margin-top: 2.5%;
+            font-size: 6rem;
+            color: #ffc000;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .portada h2 {
+            font-size: 3rem;
+            color: #ffc000;;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .content {
+            padding: 20px;
+        }
+
+            /* Header */
+        header {
+            width: 100%;
+            background-color: #333;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            position: absolute;
+            left: 20px;
+            height: 50px; /* Cambiar aquí para aumentar el tamaño */
+            top: 10px;
+        }
+
+
+        nav {
+            margin-left: 32%; /* Espaciado para no superponerse con el logo */
+        }
+
+        header nav {
+            flex: 1;
+            text-align: center;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.2rem;
+        }
+
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffc000;;
+        }
+
+
+        /* Botón para subir con flecha */
+        .back-to-top {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            top: 10px; /* Arriba */
+            right: 20px; /* Derecha */
+            background-color: #ffc000;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            display: none;
+            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+            display: flex; /* Flex para centrar contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 0.5s ease-in-out; /* Animación suave */
+        }
+        .back-to-top.show {
+            display: flex; /* Mostrar con flex cuando se añade la clase */
+            opacity: 1; /* Hacerlo visible */
+        }
+        .back-to-top img {
+            width: 20px; /* Tamaño reducido */
+            transform: rotate(90deg); /* Girar 90 grados */
+        }
+
+        /* Estilos para cada sección */
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%; /* Cambiado para que ocupe la misma distancia que el título */
+            height: 3px;
+            background-color: #3498db;
+        }
+        section p, section ul {
+            font-size: 1.2rem;
+        }
+        ul {
+            list-style: none; /* Eliminar puntos de la lista */
+            padding: 0; /* Eliminar padding de la lista */
+        }
+
+        /* Ingenieria de Proyectos */
+        #ingenieria {
+            background-color: #dadada;
+            color: rgb(63, 63, 63);
+            text-align: left;
+            transform: translateX(-100px); /* Comenzar más a la izquierda */
+        }
+
+        #servicios {
+            background-color: #272727;
+            color: rgb(204, 204, 204);
+            text-align: right;
+            transform: translateX(100px); /* Comenzar más a la derecha */
+        }
+
+        #formacion {
+            background-color: #dadada;
+            color: rgb(63, 63, 63);
+            text-align: left;
+            transform: translateX(-100px); /* Comenzar más a la izquierda */
+        }
+
+        #consultoria {
+            background-color: #272727;
+            color: rgb(204, 204, 204);
+            text-align: right;
+            transform: translateX(100px); /* Comenzar más a la derecha */
+        }
+
+        /* Ajustar la sección de contacto para que comience más abajo */
+        .contacto {
+            background-color: #333;
+            color: rgb(204, 204, 204);
+            text-align: center;
+            transform: translateY(30px); /* Comenzar más abajo */
+        }
+        .contacto p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        /* Estilos de footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Estilo para secciones visibles desde la izquierda o derecha */
+        .visible {
+            opacity: 1;
+            transform: translateX(0); /* Transición suave desde el lado correspondiente */
+        }
+        /* Animaciones específicas para cada sección */
+        #ingenieria.visible {
+            opacity: 1;
+            transform: translateX(0); /* Desde la izquierda */
+        }
+        #servicios.visible {
+            opacity: 1;
+            transform: translateX(-0); /* Desde la derecha */
+        }
+        #formacion.visible {
+            opacity: 1;
+            transform: translateX(0); /* Desde la izquierda */
+        }
+        #consultoria.visible {
+            opacity: 1;
+            transform: translateX(-0); /* Desde la derecha */
+        }
+        .contacto.visible {
+            opacity: 1;
+            transform: translateY(-0); /* Desde abajo */
+        }
+
+
+    /* Estilos para las secciones con imagen de fondo */
+    .section-background {
+        position: relative;
+        overflow: hidden; /* Para evitar que la imagen sobresalga */
+        padding: 50px 20px; /* Mantener el padding existente */
+        min-height: 100vh; /* Asegura que cada sección ocupe al menos la altura de la ventana */
+    }
+
+    /* Estilo para la imagen */
+    .section-background img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%; /* Ancho completo */
+        height: 100%; /* Altura completa */
+        object-fit: cover; /* Mantener la proporción de la imagen */
+        transform: translateX(-50%); /* Centrar la imagen */
+        z-index: -1; /* Asegurar que la imagen esté detrás del texto */
+    }
+
+    /* Estilos específicos para cada sección */
+    #ingenieria .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('Img/ingenieria.jpg') no-repeat center center/cover;
+        clip-path: polygon(0 100%, 100% 0, 100% 100%); /* Cortar desde la izquierda */
+        z-index: 1;
+    }
+
+    #servicios .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('Img/servicios.jpg') no-repeat center center/cover;
+        clip-path: polygon(0 100%, 0 0, 100% 100%); /* Cortar desde la derecha */
+        z-index: 1;
+    }
+
+    #formacion .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('Img/formacion.jpg') no-repeat center center/cover;
+        clip-path: polygon(0 100%, 100% 0, 100% 100%); /* Cortar desde la izquierda */
+        z-index: 1;
+    }
+
+    #consultoria .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('Img/consultoria.jpg') no-repeat center center/cover;
+        clip-path: polygon(0 100%, 0 0, 100% 100%); /* Cortar desde la derecha */
+        z-index: 1;
+    }
+
+    /* Contenedor para el texto */
+    .content {
+        position: relative; /* Necesario para el z-index */
+        z-index: 2; /* Asegurar que el contenido esté por encima */
+        padding: 20px; /* Espacio alrededor del texto */
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header con botón de inicio y menú -->
+    <header>
+        <a href="index.html"><img src="Img/Logo3.png" alt="Logo" class="logo"></a> <!-- Botón de inicio -->
+        <nav>
+            <ul>
+                <li><a href="#ingenieria">Ingeniería</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#formacion">Formación</a></li>
+                <li><a href="#consultoria">Consultoría</a></li>
+                <a href="galeria.html">Galería de proyectos</a>
+
+            </ul>
+        </nav>
+        
+        
+    </header>
+
+
+    <!-- Botón para volver arriba -->
+    <div class="back-to-top" id="backToTop">
+        <img src="Img/flechaizq.png" alt="Flecha hacia arriba"> <!-- Imagen de flecha -->
+    </div>
+
+    <!-- Portada -->
+    <section class="portada">
+        <img src="Img/LogoGG.png" alt="Inicio" class="portada-logo">
+        <h1>COMPARTIMOS LA ILUSIÓN<br>POR TU PROYECTO</h1>
+    </section>
+
+    <!-- Ingeniería de Proyectos -->
+    <section id="ingenieria">
+        <div class="background"></div>
+        <div class="content">
+            <h2>Ingeniería de Proyectos</h2>
+            <p>Somos una Ingeniería especializada en rótulos, certificados de estabilidad, proyectos de instalaciones y licencias de actividades.</p>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios">
+        <div class="background"></div>
+        <div class="content">
+            <h2>Servicios</h2>
+            <ul>
+                <li><strong>Rótulos Identificativos y Publicitarios:</strong> Soluciones personalizadas en diseño y tecnología.</li>
+                <li><strong>Certificados de Estabilidad:</strong> Certificados visados para presentar en los ayuntamientos.</li>
+                <li><strong>Licencias de Actividades y Memorias Técnicas:</strong> Cumplimiento normativo y seguridad garantizada.</li>
+                <li><strong>Esquemas e Instalaciones Eléctricas:</strong> Soluciones seguras y adaptadas.</li>
+                <li><strong>Instalaciones de Climatización y Aerotermia:</strong> Ahorro energético y confort garantizado.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Formación -->
+    <section id="formacion">
+        <div class="background"></div>
+        <div class="content">
+            <h2>Formación</h2>
+            <p>Nuestro objetivo es ofrecer formación de calidad, adaptada a las necesidades del mercado laboral y los avances tecnológicos. <br> Nos especializamos en:</p>
+            <ul>
+                <li><strong>Formación Reglada:</strong> Programas educativos (FPO y CP’s)….</li>
+                <li><strong>Formación Eurecat:</strong> Automatización, robótica y programación de PLC’s.</li>
+                <li><strong>Formación No Reglada Abacus:</strong> Robótica y Pizarras Digital Interactivas (PDi) para la educación.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Consultoría Empresarial -->
+    <section id="consultoria">
+        <div class="background"></div>
+        <div class="content">
+            <h2>Consultoría Empresarial</h2>
+            <ul>
+                <li><strong>Organización Industrial:</strong> Mejoras en eficiencia y eficacia empresarial.</li>
+                <li><strong>Mejoras de Procesos:</strong> Incremento de resultados mediante la mejora de procesos.</li>
+                <li><strong>Dirección y Gestión de Proyectos:</strong> Gestión de proyectos empresariales.</li>
+                <li><strong>Comercio Internacional:</strong> Procedimientos de importación y exportación.</li>
+                <li><strong>Implantación de Mejora Continua:</strong> Sistemas de mejora en las áreas claves de la empresa.</li>
+                <li><strong>Estrategias de Captación de Clientes:</strong> Fidelización y captación de nuevos clientes.</li>
+                <li><strong>Análisis y Planes de Reducción de Costes:</strong> Soluciones para aumentar los beneficios.</li>
+            </ul>
+        </div>
+    </section>
+
+
+
+
+    <!-- Contacto -->
+    <section class="contacto">
+        <h2>Contacto</h2>
+        <p>Email: seredobal@gmail.com</p>
+        <p>Teléfono: 644757007</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SEREDOBAL SL</p>
+    </footer>
+
+    <script>
+        // Función para comprobar si un elemento está en el viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const backToTopBtn = document.getElementById('backToTop');
+    
+            const observerOptions = {
+                root: null,
+                threshold: 0.1
+            };
+    
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+    
+            // Observar y verificar las secciones
+            sections.forEach(section => {
+                // Comprobar si la sección está en el viewport al cargar la página
+                if (isElementInViewport(section)) {
+                    section.classList.add('visible');
+                }
+    
+                // Comenzar a observar la sección
+                observer.observe(section);
+            });
+    
+            // Mostrar botón "volver arriba" según el scroll
+            window.addEventListener('scroll', () => {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    backToTopBtn.classList.add('show'); // Añadir clase para mostrar
+                } else {
+                    backToTopBtn.classList.remove('show'); // Quitar clase para ocultar
+                }
+            });
+    
+            // Animación suave para el botón "volver arriba"
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+    
+            // Scroll suave para enlaces del menú de navegación
+            document.querySelectorAll('header nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // Verificar si el enlace es interno o externo
+                    const isExternalLink = this.getAttribute('href').startsWith('http') || this.getAttribute('href').startsWith('#');
+                    
+                    if (isExternalLink) {
+                        e.preventDefault();  // Prevenir el comportamiento predeterminado para enlaces internos
+                        const targetId = this.getAttribute('href').substring(1); // Obtener el id del destino
+                        const targetSection = document.getElementById(targetId);
+    
+                        // Verificar si el target realmente existe en la página
+                        if (targetSection) {
+                            targetSection.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            // Si no existe el target, realiza la navegación normal (enlace a otra página)
+                            window.location.href = this.getAttribute('href');
+                        }
+                    }
+                });
+            });
+        });
+    </script>  
+    
+</body>
+</html>
